@@ -1,15 +1,37 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<div class="alert alert-primary" role="alert">
-    <h3>社内SNS</h3>
+<div class="alert alert-primary" role="alert" style= 'font-family:"Comic Sans MS";'>
+    <h3>
+        SNS
+        <a href="{% url 'list' %}" class="btn btn-primary"  tabindex="-1" role="button" aria-disabled="true">Home</a>
+    </h3>
 </div>
 {% endblock header %}
 
 {% block content %}
+{% if user.is_authenticated %}
 
+<div class="container">
+<p><a href="{% url 'create' %}" class="btn btn-success" tabindex="-1" role="button" aria-disabled="true">CREATE</a></p>
+{% for item in object_list %}
 <div class="alert alert-success" role="alert">
-    A simple success alert—check it out!
+    <!-- detail/pkごとに接続 -->
+    <p>タイトル：<a href="{% url 'detail' item.pk %}">{{item.title}}</a></p> 
+    <p>著者：{{item.author}}</p>
+    <a href="#" class="btn btn-primary disabled" tabindex="-1" role="button" aria-disabled="true">GOOD : {{ item.good }}</a>
+    <a href="#" class="btn btn-secondary  disabled" tabindex="-1" role="button" aria-disabled="true">READ : {{ item.read }}</a>
+</div>
+{% endfor %}
+
+<a href="{% url 'logout' %}" class="btn btn-danger  " tabindex="-1" role="button" aria-disabled="true">logout</a>
+
+{% else %}
+please login
+<a href="{% url 'login' %}" class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">LOGIN</a>
+
+{% endif %}
+
 </div>
 
 {% endblock content %}

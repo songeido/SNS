@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="alert alert-primary" role="alert" style= 'font-family:"Comic Sans MS";'>
+    <h3>
+        Detail
+        <a href="{% url 'list' %}" class="btn btn-primary"  tabindex="-1" role="button" aria-disabled="true">Home</a>
+    </h3>
+</div>
+{% endblock header %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="container">
+<div class="alert alert-success" role="alert">
+    <p><h3>タイトル : {{object.title}}</h3></p>
+    <p>著者 : {{object.author}}</p>
+    <p>投稿日 : {{ object.date }}</p>
+    <p>{{object.content}}</p>
+    <p><img src="{{ object.snsimage.url }}" alt="image" width=300></p>
+    <a href="{% url 'good' object.pk %}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">GOOD</a>
+    <a href="{% url 'read' object.pk %}" class="btn btn-secondary  " tabindex="-1" role="button" aria-disabled="true">READ</a>
+    <!--投稿者のみ表示-->
+    {% if object.author == authuser %} 
+    <a href="{% url 'edit' object.pk %}" class="btn btn-success"  tabindex="-1" role="button" aria-disabled="true">EDIT</a>
+    <a href="{% url 'delete' object.pk %}" class="btn btn-danger"  tabindex="-1" role="button" aria-disabled="true">DELETE</a>
+    {% endif %}
+
+</div>
+
+
+{% else %}
+please login
+<a href="{% url 'login' %}"></a>
+
+{% endif %}
+
+</div>
+
+{% endblock content %}

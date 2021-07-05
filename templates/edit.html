@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block header%}
+
+<div class="alert alert-primary" role="alert" style= 'font-family:"Comic Sans MS";'>
+    <h3>
+        EDIT
+         <a href="{% url 'list' %}" class="btn btn-primary"  tabindex="-1" role="button" aria-disabled="true">Home</a>
+    </h3>
+</div>
+
+{% endblock header %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="alert alert-success container" role="alert">
+<form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %} <!--enctypeはファイルを扱うときに使う-->
+    <p>TITLE : {{ form.title }}</p>
+    <p>CONTENT : {{ form.content }}</p>
+    <p>{{ form.snsimage }}</p>
+    <input type="hidden" name="author" value={{user.username}}>
+    <input type="submit" value="EDIT">
+</form>
+</div>
+{% else %}
+please login 
+
+{% endif %}
+    
+{% endblock content %}
+    
